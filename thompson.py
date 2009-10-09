@@ -90,6 +90,7 @@ if __name__ == '__main__':
         listen = GetTitle()
         irc.ircConnect(c)
         read_buffer = ''
+        print 'Connected to server ' + sys.argv[1]
 
         while True:
             #XXX I'd like this to be in a method or part of the 
@@ -100,10 +101,7 @@ if __name__ == '__main__':
 
             response = irc.serverResponse(temp)
             irc.keepAlive(response)
-            uri = listen.listener(response, 'http')
+            uri = listen.listenerHTTP(response, 'http')
             if uri:
                 title = listen.getTitle(uri)
                 irc.sendToChannel(c.channels[0], title)
-            print response
-
-        
