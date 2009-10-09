@@ -18,13 +18,14 @@
 
 """
 from BeautifulSoup import BeautifulSoup
+from BeautifulSoup import HTMLParseError
 from urllib2 import urlopen
 from urllib2 import URLError
 
 
 class GetTitle:
     
-    def listener(self, server_response, search_string):  
+    def listenerHTTP(self, server_response, search_string):  
         if len(server_response) >= 4 and not 'QUIT' in server_response:            
             first = server_response[3]
             second = server_response[4:]
@@ -34,16 +35,78 @@ class GetTitle:
                 if search_string == e[0:4]:
                     return e
 
-    def getTitle(self, uri):
-        """this returns the string within the <title>
-        of a given URI"""
+    def getPage(self, uri):
+        """
+        Attempt to grab the page
+        """
         try:
             page = urlopen(uri)
         except URLError:
+            print 'Could not open URI'
             return
-	soup = BeautifulSoup(page)
-	titleTag = soup.html.head.title.string
-	return titleTag
+        else:
+            print 'URI fetched'
+            return page
+        
+    def simpleTitleParser(self, page):
+        """
+        Takes a string from urllib and looks for the
+        title tag. Returns the contents of that tag.
+        """
+        start_tag = page.find('<title>')
+        end_tag = page.find('</title>')
+        if start_tag > 0:
+            content_start = start_tag + 7
+            return page[content_start:end_tag]
+
+    def getTitle(self, uri):
+        """this returns the string within the <title>
+        of a given URI"""
+
+        try:
+            page1 = urlopen(uri)
+        except URLError:
+            print 'Could not open URI'
+            return
+        else:
+            print 'URI fetched'
+
+        try:
+            soup = BeautifulSoup(page1)
+        except HTMLParseError, TypeError:
+            print 'Could not parse HTML with beautiful soup'
+        except MemoryError:
+            print 'Out of memory'
+        else:
+            print 'title tag parsed with beautiful soup'
+            if soup is not None:
+                titleTag = soup.html.head.title.string
+                try:
+                    titleTag.encode('ascii')
+                except UnicodeEncodeError:
+                    print 'Title has an encoding error'
+                    return
+                return titleTag.strip()
+
+        try:
+            page2 = urlopen(uri)
+        except URLError:
+            print 'Could not open URI'
+            return
+        else:
+            print 'URI fetched'
+
+        page_section = page2.read(1024)
+        try:
+            title_string = self.simpleTitleParser(page_section)
+        except AttributeError:
+            print 'Could not get simple title'
+            return
+        else:
+            print 'title fetched using simple parser'
+            print title_string
+            if title_string is not None:
+                return title_string.strip()
 
 
 if __name__ == '__main__':
@@ -53,7 +116,9 @@ if __name__ == '__main__':
             'PRIVMSG', '#', ':that', uri, 'be', 'comfortable']
     line2 = [':joey!~joey@82-45-8-208.cable.ubr04.aztw.blueyonder.co.uk', 
             'PRIVMSG', '#', ':http://google.com']
-    address = g.listener(line, 'http')
-    address2 = g.listener(line2, 'http')
+    html = 'lsdkjfdskj lksdjfkj lskd <head> lsdkjffi jhlsd 8847 <title>Here is the title</title>'
+    address = g.listenerHTTP(line, 'http')
+    address2 = g.listenerHTTP(line2, 'http')
     print g.getTitle(address)
     print g.getTitle(address2)
+    print g.simpleTitleParser(html)
