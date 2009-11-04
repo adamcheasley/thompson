@@ -21,6 +21,7 @@ from BeautifulSoup import BeautifulSoup
 from BeautifulSoup import HTMLParseError
 from urllib2 import urlopen
 from urllib2 import URLError
+from datetime import datetime
 
 
 class GetTitle:
@@ -42,7 +43,9 @@ class GetTitle:
         try:
             page = urlopen(uri)
         except URLError:
+            print datetime.now()
             print 'Could not open URI'
+            print 60 * '-'
             return
         else:
             print 'URI fetched'
@@ -66,10 +69,14 @@ class GetTitle:
         try:
             page1 = urlopen(uri)
         except URLError:
+            print datetime.now()
             print 'Could not open URI'
+            print 60 * '-'
             return
         else:
+            print date.now()
             print 'URI fetched'
+            print 60 * '-'
 
         try:
             soup = BeautifulSoup(page1)
