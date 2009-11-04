@@ -21,6 +21,7 @@ import sys
 import socket
 import string
 from titleGet import GetTitle
+from datetime import datetime
 
 
 s = socket.socket()
@@ -90,7 +91,9 @@ if __name__ == '__main__':
         listen = GetTitle()
         irc.ircConnect(c)
         read_buffer = ''
+        print datetime.now()
         print 'Connected to server ' + sys.argv[1]
+        print 60 * '-'
 
         while True:
             #XXX I'd like this to be in a method or part of the 
