@@ -86,14 +86,19 @@ class GetTitle:
             print 'Out of memory'
         else:
             print 'title tag parsed with beautiful soup'
-            if soup is not None:
+            if soup is not None and soup.html:
                 titleTag = soup.html.head.title.string
-                try:
-                    titleTag.encode('ascii')
-                except UnicodeEncodeError:
-                    print 'Title has an encoding error'
-                    return
-                return titleTag.strip()
+                if titleTag:
+                    try:
+                        titleTag.encode('ascii')
+                    except UnicodeEncodeError:
+                        print 'Title has an encoding error'
+                        return
+                    return titleTag.strip()
+                else:
+                    print 'No title to encode'
+            else:
+                print 'soup has no html'
 
         try:
             page2 = urlopen(uri)
