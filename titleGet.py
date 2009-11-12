@@ -74,6 +74,9 @@ class GetTitle:
     def getTitle(self, uri):
         """this returns the string within the <title>
         of a given URI"""
+        if self.isImageURI(uri):
+            print 'That was an image'
+            return
 
         try:
             page1 = urlopen(uri)
