@@ -21,6 +21,15 @@ class Tests(unittest.TestCase):
         title = p.simpleTitleParser(page)
         self.assertEqual(title, 'Hello World')
 
+    def testIsImageURI(self):
+        uri = 'http://someplacenice.co.uk/images/me.jpg'
+        uri2 = 'http://someplacenice.co.uk/images/me.png'
+        uri3 = 'http://someplacenice.co.uk/index.php'
+        t = GetTitle()
+        self.assertEqual(t.isImageURI(uri), True)
+        self.assertEqual(t.isImageURI(uri2), True)
+        self.assertEqual(t.isImageURI(uri3), None)
+
 
 if __name__ == '__main__':
         unittest.main()
