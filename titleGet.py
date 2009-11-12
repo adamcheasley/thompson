@@ -50,6 +50,15 @@ class GetTitle:
         else:
             print 'URI fetched'
             return page
+
+    def isImageURI(self, uri):
+        """
+        Find out whether the uri is pointing to an image
+        """
+        if uri[-3:] == 'jpg':
+            return True
+        elif uri[-3:] == 'png':
+            return True
         
     def simpleTitleParser(self, page):
         """
