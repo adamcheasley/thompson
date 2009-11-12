@@ -75,7 +75,9 @@ class GetTitle:
         """this returns the string within the <title>
         of a given URI"""
         if self.isImageURI(uri):
-            print 'That was an image'
+            print 'URI to an image'
+            print 60 * '*'
+            print 'Thompson will not try to parse images'
             return
 
         try:
