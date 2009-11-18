@@ -90,6 +90,7 @@ class GetTitle:
         else:
             print datetime.now()
             print 'URI fetched'
+            print uri
             print 60 * '-'
 
         try:
