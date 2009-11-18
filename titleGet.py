@@ -49,6 +49,7 @@ class GetTitle:
             return
         else:
             print 'URI fetched'
+            print uri
             return page
 
     def isImageURI(self, uri):
@@ -80,18 +81,9 @@ class GetTitle:
             print 'Thompson will not try to parse images\n'
             return
 
-        try:
-            page1 = urlopen(uri)
-        except URLError:
-            print datetime.now()
-            print 'Could not open URI\n'
-            print 60 * '-'
+        page1 = self.getPage(uri)
+        if page1 == None:
             return
-        else:
-            print datetime.now()
-            print 'URI fetched'
-            print uri
-            print 60 * '-'
 
         try:
             soup = BeautifulSoup(page1)
@@ -117,15 +109,11 @@ class GetTitle:
             else:
                 print 'soup has no html\n'
 
-        try:
-            page2 = urlopen(uri)
-        except URLError:
-            print 'Could not open URI'
+        page2 = self.getPage(uri)
+        if page2 == None:
             return
-        else:
-            print 'URI fetched'
-
         page_section = page2.read(1024)
+
         try:
             title_string = self.simpleTitleParser(page_section)
         except AttributeError:
@@ -138,16 +126,3 @@ class GetTitle:
                 return title_string.strip()
 
 
-if __name__ == '__main__':
-    g = GetTitle()
-    uri = 'http://www.someplacenice.co.uk'
-    line = [':joey!~joey@82-45-8-208.cable.ubr04.aztw.blueyonder.co.uk', 
-            'PRIVMSG', '#', ':that', uri, 'be', 'comfortable']
-    line2 = [':joey!~joey@82-45-8-208.cable.ubr04.aztw.blueyonder.co.uk', 
-            'PRIVMSG', '#', ':http://google.com']
-    html = 'lsdkjfdskj lksdjfkj lskd <head> lsdkjffi jhlsd 8847 <title>Here is the title</title>'
-    address = g.listenerHTTP(line, 'http')
-    address2 = g.listenerHTTP(line2, 'http')
-    print g.getTitle(address)
-    print g.getTitle(address2)
-    print g.simpleTitleParser(html)
