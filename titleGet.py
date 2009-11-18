@@ -106,13 +106,15 @@ class GetTitle:
                     try:
                         titleTag.encode('ascii')
                     except UnicodeEncodeError:
-                        print 'Title has an encoding error'
+                        print 'Title has an encoding error\n'
                         return
+                    print titleTag 
+                    print
                     return titleTag.strip()
                 else:
-                    print 'No title to encode'
+                    print 'No title to encode\n'
             else:
-                print 'soup has no html'
+                print 'soup has no html\n'
 
         try:
             page2 = urlopen(uri)
@@ -126,11 +128,11 @@ class GetTitle:
         try:
             title_string = self.simpleTitleParser(page_section)
         except AttributeError:
-            print 'Could not get simple title'
+            print 'Could not get simple title\n'
             return
         else:
             print 'title fetched using simple parser'
-            print title_string
+            print title_string + '\n'
             if title_string is not None:
                 return title_string.strip()
 
