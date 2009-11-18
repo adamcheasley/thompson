@@ -62,7 +62,8 @@ class IRC:
         for line in temp_string:
             line = string.rstrip(line)
             line = string.split(line)
-        return line
+            return line
+        return
 
     def sendToChannel(self, channel, msg):
         """
