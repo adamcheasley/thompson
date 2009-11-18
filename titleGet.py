@@ -77,14 +77,14 @@ class GetTitle:
         if self.isImageURI(uri):
             print 'URI to an image'
             print 60 * '*'
-            print 'Thompson will not try to parse images'
+            print 'Thompson will not try to parse images\n'
             return
 
         try:
             page1 = urlopen(uri)
         except URLError:
             print datetime.now()
-            print 'Could not open URI'
+            print 'Could not open URI\n'
             print 60 * '-'
             return
         else:
