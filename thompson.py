@@ -70,8 +70,11 @@ class IRC:
         If the message isn't too long, send the string to the server
         """
         if msg:
-            if len(msg) < 100:
+            if len(msg) < 200:
                 s.send('PRIVMSG %s :%s\r\n' % (channel, msg))
+            else:
+                print 'The title was too long'
+                print
 
     def keepAlive(self, line):        
         """
