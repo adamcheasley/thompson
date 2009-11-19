@@ -97,8 +97,8 @@ class GetTitle:
                 titleTag = soup.html.head.title.string
             except AttributeError:
                 print 'HTML had no title'
-                print 
-                return
+                titleTag = None
+
             if titleTag:
                 try:
                     titleTag.encode('ascii')
