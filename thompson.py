@@ -98,6 +98,7 @@ if __name__ == '__main__':
         print datetime.now()
         print 'Connected to server ' + sys.argv[1]
         print 60 * '-'
+        print
 
         while True:
             #XXX I'd like this to be in a method or part of the 
