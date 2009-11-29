@@ -108,7 +108,8 @@ if __name__ == '__main__':
             read_buffer = temp.pop( )
 
             response = irc.serverResponse(temp)
-            irc.keepAlive(response)
+            if response:
+                irc.keepAlive(response)
             uri = listen.listenerHTTP(response, 'http')
             if uri:
                 title = listen.getTitle(uri)
