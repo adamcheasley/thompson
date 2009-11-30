@@ -92,8 +92,6 @@ class IRC:
         return user[1:len(user)-1]
 
 
-
-
 if __name__ == '__main__':
     if len(sys.argv) < 4:
         print '\nYou need to pass in a server, channel and nick for Thompson'
