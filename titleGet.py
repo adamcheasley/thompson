@@ -121,8 +121,8 @@ class GetTitle:
             return
         else:
             print 'title fetched using simple parser'
-            print title_string + '\n'
-            if title_string is not None:
+            if title_string:
+                print title_string + '\n'
                 return title_string.strip()
 
 
