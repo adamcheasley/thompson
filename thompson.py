@@ -83,6 +83,15 @@ class IRC:
         if(line[0] == "PING"):
             s.send("PONG %s\r\n" % line[1])
 
+    def parseUser(self, server_string):
+        """
+        Gets the user nick from a server string.
+        Expects the user string to be the first in a list
+        """
+        user = re.compile(':(.*)!').search(server_string[0]).group()
+        return user[1:len(user)-1]
+
+
 
 
 if __name__ == '__main__':
