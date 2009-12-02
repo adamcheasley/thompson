@@ -91,6 +91,17 @@ class IRC:
         user = re.compile(':(.*)!').search(server_string[0]).group()
         return user[1:len(user)-1]
 
+    def listener(self, server_response, word):
+        """
+        Listen for a particular word from the channel
+        """
+        if len(server_response) >= 4 and not 'QUIT' in server_response:
+            main_words = server_response[3:]
+            # we need to remove the colon on the first word
+            main_words[0] = main_words[0][1:]
+            if word in main_words:
+                return True
+
 
 if __name__ == '__main__':
     if len(sys.argv) < 4:
@@ -121,3 +132,5 @@ if __name__ == '__main__':
             if uri:
                 title = listen.getTitle(uri)
                 irc.sendToChannel(c.channels[0], title)
+            
+            user_hi = irc.listener(response, 'hello')

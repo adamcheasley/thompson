@@ -8,12 +8,21 @@ class Tests(unittest.TestCase):
     Contains all the tests.
     """
 
-    def testHTTPListener(self):
-        line = [':joey!~joey@82-45-8-208.cable.ubr04.aztw.blueyonder.co.uk', 
+    def setUp(self):
+        self.line = [':joey!~joey@82-45-8-208.cable.ubr04.aztw.blueyonder.co.uk', 
                 'PRIVMSG', '#', ':that', 'hello', 'world', 'http://someplacenice.co.uk']
+
+    def testHTTPListener(self):
         t = GetTitle()
-        uri = t.listenerHTTP(line, 'http')
+        uri = t.listenerHTTP(self.line, 'http')
         self.assertEqual(uri, 'http://someplacenice.co.uk')
+
+    def testListener(self):
+        irc = IRC()
+        hi = irc.listener(self.line, 'hello')
+        nah = irc.listener(self.line, 'Freya')
+        self.assertEqual(hi, True)
+        self.assertEqual(nah, None)
 
     def testSimpleTitleParser(self):
         page = '<html>\n <head>\n <title>Hello World</title>\n </head>\n <body></body>\n </html>'

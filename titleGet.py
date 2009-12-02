@@ -26,8 +26,11 @@ from datetime import datetime
 
 class GetTitle:
     
-    def listenerHTTP(self, server_response, search_string):  
-        if len(server_response) >= 4 and not 'QUIT' in server_response:            
+    def listenerHTTP(self, server_response, search_string):
+        """
+        listens for links sent to the channel
+        """
+        if len(server_response) >= 4 and not 'QUIT' in server_response:
             first = server_response[3]
             second = server_response[4:]
             if search_string == first[1:5]:
