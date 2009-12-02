@@ -20,6 +20,7 @@
 import sys
 import socket
 import string
+import re
 from titleGet import GetTitle
 from datetime import datetime
 
@@ -134,3 +135,7 @@ if __name__ == '__main__':
                 irc.sendToChannel(c.channels[0], title)
             
             user_hi = irc.listener(response, 'hello')
+            if user_hi:
+                user = irc.parseUser(response)
+                thompson_say_hi = 'hey ' + user
+                irc.sendToChannel(c.channels[0], thompson_say_hi)
