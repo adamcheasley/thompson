@@ -92,17 +92,21 @@ class IRC:
         user = re.compile(':(.*)!').search(server_string[0]).group()
         return user[1:len(user)-1]
 
-    def listener(self, server_response, word):
+    def listener(self, server_response, words_list):
         """
-        Listen for a particular word from the channel
-        """
+        Listen for a list of words from the channel
+        """        
         if not server_response:
             return
         if len(server_response) >= 4 and not 'QUIT' in server_response:
             main_words = server_response[3:]
             # we need to remove the colon on the first word
             main_words[0] = main_words[0][1:]
-            if word in main_words:
+            caught_words = []
+            for word in words_list:
+                if word in main_words:
+                    caught_words.append(word)
+            if len(caught_words) == len(words_list):
                 return True
 
 
