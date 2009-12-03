@@ -30,6 +30,8 @@ class GetTitle:
         """
         listens for links sent to the channel
         """
+        if not server_response:
+            return
         if len(server_response) >= 4 and not 'QUIT' in server_response:
             first = server_response[3]
             second = server_response[4:]
