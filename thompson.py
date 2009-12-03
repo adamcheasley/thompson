@@ -96,6 +96,8 @@ class IRC:
         """
         Listen for a particular word from the channel
         """
+        if not server_response:
+            return
         if len(server_response) >= 4 and not 'QUIT' in server_response:
             main_words = server_response[3:]
             # we need to remove the colon on the first word
