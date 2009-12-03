@@ -19,8 +19,8 @@ class Tests(unittest.TestCase):
 
     def testListener(self):
         irc = IRC()
-        hi = irc.listener(self.line, 'hello')
-        nah = irc.listener(self.line, 'Freya')
+        hi = irc.listener(self.line, ['hello', 'world'])
+        nah = irc.listener(self.line, ['Freya'])
         self.assertEqual(hi, True)
         self.assertEqual(nah, None)
 
