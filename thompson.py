@@ -21,6 +21,7 @@ import sys
 import socket
 import string
 import re
+import random
 from titleGet import GetTitle
 from datetime import datetime
 
@@ -106,6 +107,8 @@ class IRC:
             for word in words_list:
                 if word in main_words:
                     caught_words.append(word)
+                elif word.title() in main_words:
+                    caught_words.append(word)
             if len(caught_words) == len(words_list):
                 return True
 
@@ -140,8 +143,9 @@ if __name__ == '__main__':
                 title = listen.getTitle(uri)
                 irc.sendToChannel(c.channels[0], title)
             
-            user_hi = irc.listener(response, 'hello')
+            user_hi = irc.listener(response, ['hello', 'thompson'])
             if user_hi:
                 user = irc.parseUser(response)
-                thompson_say_hi = 'hey ' + user
+                greeting = ['hey', 'hi', 'hello', 'sup']
+                thompson_say_hi = greeting[random.randint(0, 3)] + ' ' + user
                 irc.sendToChannel(c.channels[0], thompson_say_hi)
